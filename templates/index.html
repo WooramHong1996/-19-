@@ -86,6 +86,9 @@
         .mybtns > button {
             margin-right: 10px;
         }
+        .famous-in {
+            margin-top: 10px;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -118,7 +121,7 @@
                                                     <p class="card-text">${description}</p>
                                                     <p>${star_image}</p>
                                                     <p class="mycomment">${famous}</p>
-                                                    <button type="button" onclick="location.href='/movieDetail?movieKey=${key}'">자세히 보기</button>
+                                                    <button type="button" class="btn btn-primary" onclick="location.href='/movieDetail?movieKey=${key}'">자세히 보기</button>
                                                 </div>
                                             </div>
                                         </div>`
@@ -126,8 +129,6 @@
 
 
                         $('#movie-box').append(temp_html)
-
-
                     }
                 }
             })
@@ -184,7 +185,7 @@
     </div>
     <div class="form-floating">
         <textarea id="famous" class="form-control" placeholder="Leave a comment here"></textarea>
-        <label for="floatingTextarea2">명대사</label>
+        <label class="famous-in">명대사</label>
     </div>
     <div class="form-floating mb-3">
         <input id="password" type="email" class="form-control" placeholder="name@example.com">
