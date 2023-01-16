@@ -86,6 +86,9 @@
         .mybtns > button {
             margin-right: 10px;
         }
+        .famous-in {
+            margin-top: 10px;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -102,10 +105,12 @@
                     for (let i = 0; i < rows.length; i++){
                         let star = rows[i]['star']
                         let description = rows[i]['description']
-                        let comment = rows[i]['comment']
+                        let famous = rows[i]['famous']
                         let title = rows[i]['title']
                         let image = rows[i]['image']
                         let star_image = '⭐'.repeat(star)
+                        let key = rows[i]['key']
+
 
                         let temp_html = `<div class="col">
                                             <div class="card h-100">
@@ -115,13 +120,15 @@
                                                     <h5 class="card-title">${title}</h5>
                                                     <p class="card-text">${description}</p>
                                                     <p>${star_image}</p>
-                                                    <p class="mycomment">${comment}</p>
+                                                    <p class="mycomment">${famous}</p>
+                                                    <button type="button" class="btn btn-primary" onclick="location.href='/movieDetail?movieKey=${key}'">자세히 보기</button>
                                                 </div>
                                             </div>
                                         </div>`
 
-                        $('#cards-box').append(temp_html)
 
+
+                        $('#movie-box').append(temp_html)
                     }
                 }
             })
@@ -130,12 +137,14 @@
         function posting() {
             let url = $('#url').val()
             let star = $('#star').val()
-            let comment = $('#comment').val()
+            let famous = $('#famous').val()
+            let password = $('#password').val()
+
 
             $.ajax({
                 type: 'POST',
                 url: '/movie',
-                data: {url_give : url, star_give : star, comment_give : comment},
+                data: {url_give : url, star_give : star, famous_give : famous, password_give : password },
                 success: function (response) {
                     alert(response['msg'])
                     window.location.reload()
@@ -175,8 +184,12 @@
         </select>
     </div>
     <div class="form-floating">
-        <textarea id="comment" class="form-control" placeholder="Leave a comment here"></textarea>
-        <label for="floatingTextarea2">코멘트</label>
+        <textarea id="famous" class="form-control" placeholder="Leave a comment here"></textarea>
+        <label class="famous-in">명대사</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input id="password" type="email" class="form-control" placeholder="name@example.com">
+        <label>삭제/수정시 사용할 password 작성해주세요</label>
     </div>
     <div class="mybtns">
         <button onclick="posting()" type="button" class="btn btn-dark">기록하기</button>
@@ -184,7 +197,7 @@
     </div>
 </div>
 <div class="mycards">
-    <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+    <div class="row row-cols-1 row-cols-md-4 g-4" id="movie-box">
     </div>
 </div>
 </body>
