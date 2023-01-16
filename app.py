@@ -5,8 +5,8 @@ from pymongo import MongoClient
 import certifi
 
 ca = certifi.where()
-# client = MongoClient('mongodb+srv://test:sparta@cluster0.wycyfhs.mongodb.net/Cluster0?retryWrites=true&w=majority')
-client = MongoClient('mongodb+srv://test:sparta@cluster0.1sichzk.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=ca)
+client = MongoClient('mongodb+srv://test:sparta@cluster0.wycyfhs.mongodb.net/Cluster0?retryWrites=true&w=majority')
+# client = MongoClient('mongodb+srv://test:sparta@cluster0.1sichzk.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client.dbsparta
 app = Flask(__name__)
 
@@ -43,7 +43,8 @@ def movie_post():
         'description' : description,
         'famous' : famous_receive,
         'star' : star_receive,
-        'password' : password_receive
+        'password' : password_receive,
+        'comment' : []
     }
     db.movies.insert_one(doc)
 
@@ -57,6 +58,33 @@ def movie_get():
 @app.route('/movieDetail')
 def go_datail():
     return render_template('detail.html')
+
+@app.route("/comment/add", methods=["POST"])
+def comment_add():
+    key_receive = int(request.form['key_give'])
+    new_comment = request.form['comment_give']
+    search_movie = db.movies.find_one({'key': key_receive})
+    comment_list = search_movie['comment']
+
+    comment_list.append(new_comment)
+    db.movies.update_one({'key': key_receive}, {'$set': {'comment': comment_list}})
+
+    return jsonify({'msg': '코멘트 추가 성공!'})
+
+
+
+@app.route("/comment/del", methods=["POST"])
+def comment_del():
+    key_receive = int(request.form['key_give'])
+    num_receive = int(request.form['num_give'])
+    search_movie = db.movies.find_one({'key': key_receive})
+    comment_list = search_movie['comment']
+
+    del comment_list[num_receive]
+    db.movies.update_one({'key': key_receive}, {'$set': {'comment': comment_list}})
+
+    return jsonify({'msg': '댓글 삭제 완료!'})
+
 
 
 if __name__ == '__main__':
