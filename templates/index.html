@@ -91,6 +91,64 @@
             margin-right: 10px;
         }
 
+        .pagination a {
+            float: left;
+            display: block;
+            font-size: 14px;
+            text-decoration: none;
+            padding: 5px 12px;
+            color: #96a0ad;
+            line-height: 1.5;
+        }
+
+        .first{
+            margin-right: 15px;
+        }
+
+        .last{
+            margin-left: 15px;
+        }
+
+        .first:hover, .last:hover, .left:hover, .right:hover{
+            color: #2e9cdf;
+        }
+
+        .pagination a:active{
+            outline: none;
+        }
+
+        .modal .num{
+            margin-left: 3px;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            -moz-border-radius: 100%;
+            -webkit-border-radius: 100%;
+            border-radius: 100%;
+        }
+
+        .modal .num:hover {
+            background-color: #2e9cdf;
+            color: white;
+        }
+
+        .modal .num.active, .modal .num:active {
+            background-color: #2e9cdf;
+            cursor: pointer;
+        }
+
+        .arrow left{
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid black;
+        }
+
+
+
+
+
     </style>
     <script>
         $(document).ready(function () {
@@ -177,6 +235,8 @@
 </head>
 
 <body>
+
+
 <div class="mytitle">
     <h1>밥은 먹고다니냐?</h1>
     <button onclick="open_box()">영화 리뷰 남기기</button>
@@ -197,23 +257,28 @@
             <option value="5">⭐⭐⭐⭐⭐</option>
         </select>
     </div>
-<div class="form-floating mb-3">
-  <input type="email" class="form-control" id="famous" placeholder="name@example.com">
-  <label for="floatingInput">나만의 명대사 남기기</label>
-</div>
-<div class="form-floating">
-  <input type="password" class="form-control" id="password" placeholder="Password">
-  <label for="floatingPassword">PW</label>
-</div>
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="famous" placeholder="name@example.com">
+        <label for="floatingInput">나만의 명대사 남기기</label>
+    </div>
+    <div class="form-floating">
+        <input type="password" class="form-control" id="password" placeholder="Password">
+        <label for="floatingPassword">PW</label>
+    </div>
     <div class="mybtns">
         <button onclick="posting()" type="button" class="btn btn-dark">기록하기</button>
         <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
     </div>
 </div>
+
 <div class="mycards">
     <div class="row row-cols-1 row-cols-md-4 g-4" id="movie-box">
     </div>
 </div>
+
+
+
+
 </body>
 
 </html>
