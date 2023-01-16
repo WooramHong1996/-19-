@@ -174,7 +174,7 @@
             box-sizing: content-box;
             width: 1px;
             height: 1px;
-            color: #;
+            color: #999;
             font-size: 50px;
             text-align: center;
         }
@@ -191,14 +191,6 @@
         }
 
     </style>
-    <script>
-        function open_box() {
-            $('#post-box').show()
-        }
-        function close_box() {
-            $('#post-box').hide()
-        }
-    </script>
 </head>
 <body>
 <div class="mytitle">
@@ -208,7 +200,7 @@
 
 <div class="mypost" id="post-box">
     <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect01">별점</label>
+        <label class="input-group-text" for="star">별점</label>
         <select class="form-select" id="star">
             <option selected>-- 선택하기 --</option>
             <option value="1">⭐</option>
