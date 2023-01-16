@@ -64,6 +64,7 @@ def comment_add():
     key_receive = int(request.form['key_give'])
     new_comment = request.form['comment_give']
     search_movie = db.movies.find_one({'key': key_receive})
+    print(search_movie)
     comment_list = search_movie['comment']
 
     comment_list.append(new_comment)
@@ -85,6 +86,20 @@ def comment_del():
 
     return jsonify({'msg': '댓글 삭제 완료!'})
 
+@app.route("/change", methods=["POST"])
+def chagne_star():
+    key_receive = int(request.form['key_give'])
+    pwd_receive = request.form['password_give']
+    famous_receive = request.form['famous_give']
+    star_receive = request.form['star_give']
+    search_movie = db.movies.find_one({'key': key_receive})
+
+    password = search_movie['password']
+    if(pwd_receive==password):
+        return
+    comment_list = search_movie['comment']
+
+    return jsonify({'msg': '댓글 삭제 완료!'})
 
 
 if __name__ == '__main__':
