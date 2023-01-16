@@ -17,7 +17,7 @@
             font-family: 'Gowun Dodum', sans-serif;
         }
 
-        li{
+        li {
             list-style: none;
         }
 
@@ -53,6 +53,7 @@
         .mytitle > button:hover {
             border: 2px solid white;
         }
+
         .mypost {
             width: 95%;
             max-width: 500px;
@@ -136,7 +137,8 @@
             height: 100%;
             display: none;
         }
-        .modal.active{
+
+        .modal.active {
             display: block;
         }
 
@@ -150,12 +152,13 @@
             left: 50%;
             transform: translate(-50%, -50%);
             padding: 30px;
-            box-shadow: 0 0 15px rgba(0,00,0,0.15);
+            box-shadow: 0 0 15px rgba(0, 00, 0, 0.15);
             margin-left: 0;
             animation: slidefade 0.3s linear;
         }
+
         @keyframes slidefade {
-            0%{
+            0% {
                 opacity: 0;
                 margin-top: 100px;
             }
@@ -179,14 +182,14 @@
             text-align: center;
         }
 
-        c-delete{
+        c-delete {
             display: flex;
             width: 50px;
             margin-top: 50px;
             position: absolute;
         }
 
-        .form-floating{
+        .form-floating {
             margin-bottom: 15px;
         }
 
@@ -234,7 +237,6 @@
 </div>
 
 
-
 <div class="info-box" id="show-box">
     <!--img, desc box-->
     <div class="img">
@@ -264,19 +266,18 @@
         </div>
         <button onclick="add_comment()">등록</button>
     </div>
-<!--    <div class="comment-part">-->
-<!--        <div class="comment">-->
-<!--            <h1>댓글 내용</h1>-->
-<!--        </div>-->
-<!--        <button onclick="openModal()">삭제</button>-->
-<!--    </div>-->
+    <!--    <div class="comment-part">-->
+    <!--        <div class="comment">-->
+    <!--            <h1>댓글 내용</h1>-->
+    <!--        </div>-->
+    <!--        <button onclick="openModal()">삭제</button>-->
+    <!--    </div>-->
 </div>
 <!--<button onclick="add_comment()">등록</button>-->
 </div>
 <div id="comments">
 </div>
 </body>
-
 
 
 <script>
@@ -288,6 +289,7 @@
     $(document).ready(function () {
         listing();
     });
+
     function listing() {
         $.ajax({
             type: 'GET',
@@ -298,9 +300,9 @@
                 let rows = response['movie']
                 let comments = []
 
-                for (let i = 0; i < rows.length; i++){
+                for (let i = 0; i < rows.length; i++) {
 
-                    if (rows[i]['key'] == key){
+                    if (rows[i]['key'] == key) {
                         let image = rows[i]['image']
                         let description = rows[i]['description']
                         let famous = rows[i]['famous']
@@ -322,9 +324,9 @@
 
                 console.log(comments)
                 console.log(comments[0])
-                console.log((typeof(comments[0])))
+                console.log((typeof (comments[0])))
 
-                for (let j=0;j<comments.length;j++){
+                for (let j = 0; j < comments.length; j++) {
                     let comment_insert = comments[j]
 
 
@@ -340,25 +342,27 @@
                 }
 
 
-
             }
         })
     }
 
     function add_comment() {
         let new_comment = $('#write_comment').val()
+        if (new_comment==""){
+            alert("댓글을 입력하세요")
+        }
 
-        $.ajax({
+        else{$.ajax({
             type: "POST",
             url: "/comment/add",
-            data: {key_give: key_in_here,comment_give: new_comment},
+            data: {key_give: key_in_here, comment_give: new_comment},
             success: function (response) {
                 alert(response["msg"])
                 window.location.reload()
             }
         });
 
-    }
+    }}
 
     function del_comment(cnt) {
         $.ajax({
@@ -372,20 +376,35 @@
         });
     }
 
-    function changing(){
+    function changing() {
         let changed_star = $('#star').val();
         let changed_famous = $('#famous').val();
         let changed_password = $('#password').val();
-        $.ajax({
-            type: "POST",
-            url: "/change",
-            data: {key_give: key_in_here,star_give: changed_star, famous_give:changed_famous,password_give:changed_password},
-            success: function (response) {
-                alert(response["msg"])
-                window.location.reload()
-            }
-        });
-    }
+        if ($('#star').val()=="-- 선택하기 --"){
+            alert("별 갯수를 입력하세요")
+        }
+        else if(changed_famous==""){
+            alert("명대사를 입력하세요")
+        }
+        else if(changed_password==""){
+            alert("비밀번호를 입력하세요")
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: "/change",
+                data: {
+                    key_give: key_in_here,
+                    star_give: changed_star,
+                    famous_give: changed_famous,
+                    password_give: changed_password
+                },
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            });
+        }}
 
     let modal = document.getElementById('modal-notice');
 
@@ -397,27 +416,29 @@
 
     function del_com() {
         let pass_check = $('#c-password').val()
-        if (pass_check == password_from_check){
+        if (pass_check == password_from_check) {
             del_comment(comment_modal_number)
             comment_modal_number = 9999
-        } else{
+        } else {
             alert("비밀번호가 틀렸습니다.")
             window.location.reload();
         }
 
 
-
-
     }
-
-
-
 
 
     function closeModal() {
         modal.classList.remove('active');
     }
 
+    function open_box() {
+        $('#post-box').show()
+    }
+
+    function close_box() {
+        $('#post-box').hide()
+    }
 
 
 </script>
