@@ -70,19 +70,22 @@
             display: flex;
             justify-content: center;
             flex-direction: row;
+
+            margin-top: 30px;
         }
 
         .comment-box {
             display: flex;
             justify-content: center;
             flex-direction: row;
+            margin: 30px 0 50px 0;
         }
 
         .desc-box {
             display: flex;
-            justify-content: center;
+            /*justify-content: center;*/
             flex-direction: column;
-            width: 600px;
+            width: 550px;
             height: 550px;
             margin: 10px;
         }
@@ -93,13 +96,15 @@
             justify-content: center;
             flex-direction: row;
             margin-top: 20px;
+            height: 50px;
         }
 
         .img {
-            margin-top: 10px;
+            margin : 10px 30px 10px 40px;
             background-color: teal;
             width: auto;
             height: 550px;
+
         }
 
         .img_fill {
@@ -110,24 +115,27 @@
 
         .desc {
             background-color: #DDDDDD;
-            height: auto;
+            margin-top: 20px;
+            padding : 30px;
+            height: 200px;
             border-radius: 8px;
             box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, .15);
         }
 
         .comment-input {
-            max-width: 1000px;
+            max-width: 900px;
             width: 100%;
         }
 
         .comment-btn {
-            background-color: darkmagenta;
+            margin-left: 30px;
         }
 
         .star {
             background-color: orange;
             height: auto;
-            margin-top: 30px;
+            margin: 30px 0 15px 0;
+            padding: 15px 10px 10px 15px;
             box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, .15);
             border-radius: 8px;
             color: white;
@@ -139,8 +147,10 @@
 
         .comment {
             background-color: peachpuff;
+            padding: 10px 0 0 30px;
+            margin-right: 35px;
             border-radius: 8px;
-            max-width: 1000px;
+            max-width: 900px;
             width: 100%;
             font-size: 23px;
             box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, .15);
@@ -214,6 +224,7 @@
         .star_show {
             margin-top: 20px;
             background-color: aliceblue;
+            padding: 15px 10px 10px 15px;
             box-shadow: 0 0 15px rgba(0, 00, 0, 0.15);
             border-radius: 8px;
         }
@@ -279,11 +290,11 @@
     <div class="desc-box">
         <div class="desc">
             <h2> 줄거리 요약</h2>
-            <h3 id="desc">desc</h3>
+            <h5 id="desc">desc</h5>
         </div>
         <div class="star">
             <h2>글쓴이가 생각하는 명대사</h2>
-            <h3 id="called_famous" class="star_famous">명대사</h3>
+            <h5 id="called_famous" class="star_famous">명대사</h5>
         </div>
         <div class="star_show">
             <h2>나의 영화 평점</h2>
@@ -298,7 +309,7 @@
     <div class="comment-input">
         <input id="write_comment" class="form-control" type="text" placeholder="댓글을 입력하세요">
     </div>
-    <div class="comment-box">
+    <div class="comment-btn">
         <button onclick="add_comment()" class="btn btn-primary">등록</button>
     </div>
 </div>
@@ -361,9 +372,9 @@
 
                     let temp_html = `<div class="comment-part">
                                             <div class="comment">
-                                                <h1>${comment_insert}</h1>
+                                                <p>${comment_insert}</p>
                                             </div>
-                                            <button onclick="openModal(${j})">삭제</button>
+                                                <button onclick="openModal(${j})">삭제</button>
                                         </div>`
                     console.log(j)
 
