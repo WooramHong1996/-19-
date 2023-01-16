@@ -95,11 +95,15 @@ def chagne_star():
     search_movie = db.movies.find_one({'key': key_receive})
 
     password = search_movie['password']
-    if(pwd_receive==password):
-        return
-    comment_list = search_movie['comment']
+    print(password)
+    if(pwd_receive == password):
+        print("성공")
+        db.movies.update_one({'key': key_receive}, {'$set': {'famous': famous_receive}})
+        db.movies.update_one({'key': key_receive}, {'$set': {'star': star_receive}})
+        return jsonify({'msg': '수정 완료!'})
+    print("실패")
 
-    return jsonify({'msg': '댓글 삭제 완료!'})
+    return jsonify({'msg': '에러! 비밀번호를 확인하세요.'})
 
 
 if __name__ == '__main__':
