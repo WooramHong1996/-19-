@@ -82,11 +82,11 @@
             display: flex;
             justify-content: center;
             flex-direction: column;
-            background-color: antiquewhite;
             width: 600px;
-            height: 500px;
+            height: 550px;
             margin: 10px;
         }
+
 
         .comment-part {
             display: flex;
@@ -96,15 +96,23 @@
         }
 
         .img {
+            margin-top: 10px;
             background-color: teal;
-            width: 400px;
-            height: 500px;
-            margin: 10px;
+            width: auto;
+            height: 550px;
+        }
+
+        .img_fill {
+            width: auto;
+            height: 550px;
+            box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, .15);
         }
 
         .desc {
-            background-color: yellow;
-            height: 300px;
+            background-color: #DDDDDD;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, .15);
         }
 
         .comment-input {
@@ -118,16 +126,25 @@
         }
 
         .star {
-            background-color: crimson;
-            height: 100px;
+            background-color: orange;
+            height: auto;
             margin-top: 30px;
+            box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, .15);
+            border-radius: 8px;
+            color: white;
+        }
+
+        .star_famous {
+            color: black;
         }
 
         .comment {
-            background-color: darkslateblue;
-            color: antiquewhite;
+            background-color: peachpuff;
+            border-radius: 8px;
             max-width: 1000px;
             width: 100%;
+            font-size: 23px;
+            box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, .15);
         }
 
         .modal {
@@ -195,6 +212,13 @@
             margin-bottom: 15px;
         }
 
+        .star_show {
+            margin-top: 20px;
+            background-color: aliceblue;
+            box-shadow: 0 0 15px rgba(0, 00, 0, 0.15);
+            border-radius: 8px;
+        }
+
     </style>
     <script>
         function open_box() {
@@ -249,42 +273,37 @@
 
 
 <div class="info-box" id="show-box">
-    <!--img, desc box-->
     <div class="img">
-        <img id="called-img">
+        <img id="called-img" class="img_fill">
     </div>
+
     <div class="desc-box">
         <div class="desc">
-            <h1 id="desc">desc</h1>
+            <h2> 줄거리 요약</h2>
+            <h3 id="desc">desc</h3>
         </div>
         <div class="star">
-            <h1 id="called_famous">명대사</h1>
-            <h1 id="called_star">별점</h1>
+            <h2>글쓴이가 생각하는 명대사</h2>
+            <h3 id="called_famous" class="star_famous">명대사</h3>
+        </div>
+        <div class="star_show">
+            <h2>나의 영화 평점</h2>
+            <h3 id="called_star">별점</h3>
+            </h1>
         </div>
     </div>
 </div>
 
 
 <div class="comment-box">
-    <!--commet box-->
     <div class="comment-input">
         <input id="write_comment" class="form-control" type="text" placeholder="댓글을 입력하세요">
     </div>
     <div class="comment-box">
-        <!--commet box-->
-        <div class="comment-input">
-            <h1></h1>
-        </div>
-        <button onclick="add_comment()">등록</button>
+        <button onclick="add_comment()" class="btn btn-primary">등록</button>
     </div>
-    <!--    <div class="comment-part">-->
-    <!--        <div class="comment">-->
-    <!--            <h1>댓글 내용</h1>-->
-    <!--        </div>-->
-    <!--        <button onclick="openModal()">삭제</button>-->
-    <!--    </div>-->
 </div>
-<!--<button onclick="add_comment()">등록</button>-->
+
 </div>
 <div id="comments">
 </div>
