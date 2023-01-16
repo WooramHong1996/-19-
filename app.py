@@ -105,6 +105,11 @@ def chagne_star():
 
     return jsonify({'msg': '에러! 비밀번호를 확인하세요.'})
 
+@app.route("/delete/movie", methods=["POST"])
+def del_movie():
+    key_receive = int(request.form['key_give'])
+    db.movies.delete_one({'key':key_receive})
+    return jsonify({'msg': '삭제 완료!'})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5001, debug=True)

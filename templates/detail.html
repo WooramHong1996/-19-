@@ -194,6 +194,14 @@
         }
 
     </style>
+    <script>
+        function open_box() {
+            $('#post-box').show()
+        }
+        function close_box() {
+            $('#post-box').hide()
+        }
+    </script>
 </head>
 <body>
 <div class="mytitle">
@@ -224,6 +232,7 @@
     <div class="mybtns">
         <button onclick="changing()" type="button" class="btn btn-dark">수정하기</button>
         <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
+        <button onclick="openModal(10000)" type="button" class="btn btn-outline-danger">삭제</button>
     </div>
 </div>
 <!--모달창-->
@@ -416,16 +425,37 @@
 
     function del_com() {
         let pass_check = $('#c-password').val()
-        if (pass_check == password_from_check) {
+        if(comment_modal_number == 10000){      // 영화를 삭제하는 경우
+            if (pass_check == password_from_check) {
+                $.ajax({
+                    type: "POST",
+                    url: "/delete/movie",
+                    data: {key_give:key_in_here},
+                    success: function (response) {
+                        alert(response["msg"])
+                        window.location.href = '/';
+                    }
+                });
+            } else {
+                alert("비밀번호가 틀렸습니다.")
+                comment_modal_number = 9999
+                window.location.reload();
+            }
+        } else{     // 댓글을 삭제하는 경우
+            if (pass_check == password_from_check){
             del_comment(comment_modal_number)
             comment_modal_number = 9999
-        } else {
+        } else{
             alert("비밀번호가 틀렸습니다.")
+            comment_modal_number = 9999
             window.location.reload();
         }
-
-
+        }
     }
+
+
+
+
 
 
     function closeModal() {
