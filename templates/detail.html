@@ -205,54 +205,64 @@
     <h1>내 생애 최고의 영화들</h1>
     <button onclick="open_box()">수정하기</button>
 </div>
+
 <div class="mypost" id="post-box">
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">별점</label>
-            <select class="form-select" id="star">
-                <option selected>-- 선택하기 --</option>
-                <option value="1">⭐</option>
-                <option value="2">⭐⭐</option>
-                <option value="3">⭐⭐⭐</option>
-                <option value="4">⭐⭐⭐⭐</option>
-                <option value="5">⭐⭐⭐⭐⭐</option>
-            </select>
-        </div>
-        <div class="form-floating">
-            <textarea id="famous" class="form-control" placeholder="Leave a comment here"></textarea>
-            <label class="famous-in">명대사</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input id="password" type="email" class="form-control" placeholder="name@example.com">
-            <label>기록시 입력한 password를 입력해주세요</label>
-        </div>
-        <div class="mybtns">
-            <button onclick="posting()" type="button" class="btn btn-dark">수정하기</button>
-            <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
-        </div>
+    <div class="input-group mb-3">
+        <label class="input-group-text" for="inputGroupSelect01">별점</label>
+        <select class="form-select" id="star">
+            <option selected>-- 선택하기 --</option>
+            <option value="1">⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="5">⭐⭐⭐⭐⭐</option>
+        </select>
     </div>
+    <div class="form-floating">
+        <textarea id="famous" class="form-control" placeholder="Leave a comment here"></textarea>
+        <label class="famous-in">명대사</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input id="password" type="email" class="form-control" placeholder="name@example.com">
+        <label>기록시 입력한 password를 입력해주세요</label>
+    </div>
+    <div class="mybtns">
+        <button onclick="posting()" type="button" class="btn btn-dark">수정하기</button>
+        <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
+    </div>
+</div>
 <!--모달창-->
 <div class="modal" id="modal-notice">
     <div class="modal-content">
         <a href="#none" class="btn-close" onclick="closeModal()"></a>
         <li class="c-password">비밀번호를 입력하세요.</li>
         <input type="password" id="c-password">
-        <button type="button" class="c-delete">확인</button>
+        <button type="button" class="c-delete" >확인</button>
+    </div>
+</div>
+
+
+<div class="info-box" id="show-box">
+    <!--img, desc box-->
+    <div class="img">
+        <img id="called-img">
+    </div>
+    <div class="desc-box">
+        <div class="desc">
+            <h1 id="desc">desc</h1>
+        </div>
+        <div class="star">
+            <h1 id="called_famous">명대사</h1>
+            <h1 id="called_star">별점</h1>
         </div>
     </div>
-    <div class="info-box">
-        <!--img, desc box-->
-        <div class="img">
-            <h1>img</h1>
-        </div>
-        <div class="desc-box">
-            <div class="desc">
-                <h1>desc</h1>
-            </div>
-            <div class="star">
-                <h1>명대사, 별점</h1>
-            </div>
-        </div>
+</div>
 
+
+<div class="comment-box">
+    <!--commet box-->
+    <div class="comment-input">
+        <input id="write_comment" class="form-control" type="text" placeholder="댓글을 입력하세요">
     </div>
     <div class="comment-box">
         <!--commet box-->
@@ -268,15 +278,113 @@
         <button onclick="openModal()">삭제</button>
     </div>
 </div>
+<button onclick="add_comment()">등록</button>
+</div>
+<div id="comments">
+</div>
+</body>
+
+
+
 <script>
+    const key_in_here = window.location.href.split('=')[1];
+
+    $(document).ready(function () {
+        listing();
+    });
+    function listing() {
+        $.ajax({
+            type: 'GET',
+            url: '/movie',
+            data: {},
+            success: function (response) {
+                let key = Number(key_in_here)
+                let rows = response['movie']
+                let comments = []
+
+                for (let i = 0; i < rows.length; i++){
+
+                    if (rows[i]['key'] == key){
+                        let image = rows[i]['image']
+                        let description = rows[i]['description']
+                        let famous = rows[i]['famous']
+                        let star = rows[i]['star']
+                        let star_image = '⭐'.repeat(star)
+                        let password = rows[i]['password']
+                        comments = rows[i]['comment']
+
+                        document.getElementById("called-img").src = image
+                        document.getElementById("desc").innerText = description
+                        document.getElementById("famous").innerText = famous
+                        document.getElementById("star").innerText = star_image
+
+                    }
+                }
+
+                console.log(comments)
+                console.log(comments[0])
+                console.log((typeof(comments[0])))
+
+                for (let j=0;j<comments.length;j++){
+                    let comment_insert = comments[j]
+
+
+                    let temp_html = `<div class="comment-part">
+                                            <div class="comment">
+                                                <h1>"${comment_insert}"</h1>
+                                            </div>
+                                            <button onclick="del_comment(${j})">삭제</button>
+                                        </div>`
+                    console.log(j)
+
+                    $('#comments').append(temp_html)
+                }
+
+
+
+            }
+        })
+    }
+
+    function add_comment() {
+        let new_comment = $('#write_comment').val()
+
+        $.ajax({
+            type: "POST",
+            url: "/comment/add",
+            data: {key_give: key_in_here,comment_give: new_comment},
+            success: function (response) {
+                alert(response["msg"])
+                window.location.reload()
+            }
+        });
+
+    }
+
+    function del_comment(cnt) {
+        $.ajax({
+            type: "POST",
+            url: "/comment/del",
+            data: {key_give: key_in_here, num_give: cnt},
+            success: function (response) {
+                alert(response["msg"])
+                window.location.reload()
+            }
+        });
+    }
+
     let modal = document.getElementById('modal-notice');
 
     function openModal() {
+
         modal.classList.add('active');
     }
+
     function closeModal() {
         modal.classList.remove('active');
     }
+
+
+
 </script>
-</body>
 </html>
