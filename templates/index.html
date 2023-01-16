@@ -12,22 +12,23 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
 
-    <title>스파르타 피디아</title>
+    <title></title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 
     <style>
         * {
-            font-family: 'Gowun Dodum', sans-serif;
+            font-family: 'Black Han Sans', sans-serif;
         }
 
         .mytitle {
             width: 100%;
-            height: 250px;
+            height: 700px;
 
-            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://movie-phinf.pstatic.net/20210715_95/1626338192428gTnJl_JPEG/movie_image.jpg');
+            background-image: url('https://4.bp.blogspot.com/-BEI-sITYJMc/XIMJSEJoOYI/AAAAAAAALRA/seWK0PMTMq4AcCvkocSKNbtYni08BCGVwCLcBGAs/s1600/fantasia2000.jpg');
             background-position: center;
             background-size: cover;
+
 
             color: white;
 
@@ -42,16 +43,19 @@
             height: 50px;
 
             background-color: transparent;
-            color: white;
+            color: yellow;
 
             border-radius: 50px;
             border: 1px solid white;
 
             margin-top: 10px;
         }
+        .mytitle > button{
+            font-size: 28px;
+        }
 
         .mytitle > button:hover {
-            border: 2px solid white;
+            border: 2px solid yellow;
         }
 
         .mycomment {
@@ -86,9 +90,7 @@
         .mybtns > button {
             margin-right: 10px;
         }
-        .famous-in {
-            margin-top: 10px;
-        }
+
     </style>
     <script>
         $(document).ready(function () {
@@ -164,8 +166,8 @@
 
 <body>
 <div class="mytitle">
-    <h1>내 생애 최고의 영화들</h1>
-    <button onclick="open_box()">영화 기록하기</button>
+    <h1>밥은 먹고다니냐?</h1>
+    <button onclick="open_box()">영화 리뷰 남기기</button>
 </div>
 <div class="mypost" id="post-box">
     <div class="form-floating mb-3">
@@ -173,7 +175,7 @@
         <label>영화URL</label>
     </div>
     <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect01">별점</label>
+        <label class="input-group-text" for="star">별점</label>
         <select class="form-select" id="star">
             <option selected>-- 선택하기 --</option>
             <option value="1">⭐</option>
@@ -183,14 +185,14 @@
             <option value="5">⭐⭐⭐⭐⭐</option>
         </select>
     </div>
-    <div class="form-floating">
-        <textarea id="famous" class="form-control" placeholder="Leave a comment here"></textarea>
-        <label class="famous-in">명대사</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input id="password" type="email" class="form-control" placeholder="name@example.com">
-        <label>삭제/수정시 사용할 password 작성해주세요</label>
-    </div>
+<div class="form-floating mb-3">
+  <input type="email" class="form-control" id="famous" placeholder="name@example.com">
+  <label for="floatingInput">나만의 명대사 남기기</label>
+</div>
+<div class="form-floating">
+  <input type="password" class="form-control" id="password" placeholder="Password">
+  <label for="floatingPassword">PW</label>
+</div>
     <div class="mybtns">
         <button onclick="posting()" type="button" class="btn btn-dark">기록하기</button>
         <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
