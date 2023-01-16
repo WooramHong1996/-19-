@@ -408,6 +408,9 @@
         if (pass_check == password_from_check){
             del_comment(comment_modal_number)
             comment_modal_number = 9999
+        } else{
+            alert("비밀번호가 틀렸습니다.")
+            window.location.reload();
         }
 
 
