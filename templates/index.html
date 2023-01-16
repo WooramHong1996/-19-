@@ -12,22 +12,23 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
 
-    <title>스파르타 피디아</title>
+    <title></title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 
     <style>
         * {
-            font-family: 'Gowun Dodum', sans-serif;
+            font-family: 'Black Han Sans', sans-serif;
         }
 
         .mytitle {
             width: 100%;
-            height: 250px;
+            height: 700px;
 
-            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://movie-phinf.pstatic.net/20210715_95/1626338192428gTnJl_JPEG/movie_image.jpg');
+            background-image: url('https://4.bp.blogspot.com/-BEI-sITYJMc/XIMJSEJoOYI/AAAAAAAALRA/seWK0PMTMq4AcCvkocSKNbtYni08BCGVwCLcBGAs/s1600/fantasia2000.jpg');
             background-position: center;
             background-size: cover;
+
 
             color: white;
 
@@ -42,16 +43,19 @@
             height: 50px;
 
             background-color: transparent;
-            color: white;
+            color: yellow;
 
             border-radius: 50px;
             border: 1px solid white;
 
             margin-top: 10px;
         }
+        .mytitle > button{
+            font-size: 28px;
+        }
 
         .mytitle > button:hover {
-            border: 2px solid white;
+            border: 2px solid yellow;
         }
 
         .mycomment {
@@ -86,6 +90,65 @@
         .mybtns > button {
             margin-right: 10px;
         }
+
+        .pagination a {
+            float: left;
+            display: block;
+            font-size: 14px;
+            text-decoration: none;
+            padding: 5px 12px;
+            color: #96a0ad;
+            line-height: 1.5;
+        }
+
+        .first{
+            margin-right: 15px;
+        }
+
+        .last{
+            margin-left: 15px;
+        }
+
+        .first:hover, .last:hover, .left:hover, .right:hover{
+            color: #2e9cdf;
+        }
+
+        .pagination a:active{
+            outline: none;
+        }
+
+        .modal .num{
+            margin-left: 3px;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            -moz-border-radius: 100%;
+            -webkit-border-radius: 100%;
+            border-radius: 100%;
+        }
+
+        .modal .num:hover {
+            background-color: #2e9cdf;
+            color: white;
+        }
+
+        .modal .num.active, .modal .num:active {
+            background-color: #2e9cdf;
+            cursor: pointer;
+        }
+
+        .arrow left{
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid black;
+        }
+
+
+
+
+
     </style>
     <script>
         $(document).ready(function () {
@@ -102,10 +165,12 @@
                     for (let i = 0; i < rows.length; i++){
                         let star = rows[i]['star']
                         let description = rows[i]['description']
-                        let comment = rows[i]['comment']
+                        let famous = rows[i]['famous']
                         let title = rows[i]['title']
                         let image = rows[i]['image']
                         let star_image = '⭐'.repeat(star)
+                        let key = rows[i]['key']
+
 
                         let temp_html = `<div class="col">
                                             <div class="card h-100">
@@ -115,13 +180,15 @@
                                                     <h5 class="card-title">${title}</h5>
                                                     <p class="card-text">${description}</p>
                                                     <p>${star_image}</p>
-                                                    <p class="mycomment">${comment}</p>
+                                                    <p class="mycomment">${famous}</p>
+                                                    <button type="button" class="btn btn-primary" onclick="location.href='/movieDetail?movieKey=${key}'">자세히 보기</button>
                                                 </div>
                                             </div>
                                         </div>`
 
-                        $('#cards-box').append(temp_html)
 
+
+                        $('#movie-box').append(temp_html)
                     }
                 }
             })
@@ -130,18 +197,35 @@
         function posting() {
             let url = $('#url').val()
             let star = $('#star').val()
-            let comment = $('#comment').val()
+            let famous = $('#famous').val()
+            let password = $('#password').val()
+            if(url ==""){
+                alert("url을 입력하세요");
+            }
+            else if(!(url.substring(0,4) =="http")){
+                alert("유효한 url형식이 아닙니다.")
+            }
+            else if(star=="-- 선택하기 --"){
+                alert("star 갯수를 선택하세요.")
+            }
+            else if(famous==""){
+                alert("명대사를 입력하세요.")
+            }
+            else if(password==""){
+                alert("비밀번호를 입력하세요")
+            }
 
-            $.ajax({
-                type: 'POST',
-                url: '/movie',
-                data: {url_give : url, star_give : star, comment_give : comment},
-                success: function (response) {
-                    alert(response['msg'])
-                    window.location.reload()
-                }
-            });
-        }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/movie',
+                    data: {url_give: url, star_give: star, famous_give: famous, password_give: password},
+                    success: function (response) {
+                        alert(response['msg'])
+                        window.location.reload()
+                    }
+                });
+            }}
 
         function open_box() {
             $('#post-box').show()
@@ -154,9 +238,11 @@
 </head>
 
 <body>
+
+
 <div class="mytitle">
-    <h1>내 생애 최고의 영화들</h1>
-    <button onclick="open_box()">영화 기록하기</button>
+    <h1>밥은 먹고다니냐?</h1>
+    <button onclick="open_box()">영화 리뷰 남기기</button>
 </div>
 <div class="mypost" id="post-box">
     <div class="form-floating mb-3">
@@ -164,7 +250,7 @@
         <label>영화URL</label>
     </div>
     <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect01">별점</label>
+        <label class="input-group-text" for="star">별점</label>
         <select class="form-select" id="star">
             <option selected>-- 선택하기 --</option>
             <option value="1">⭐</option>
@@ -174,19 +260,28 @@
             <option value="5">⭐⭐⭐⭐⭐</option>
         </select>
     </div>
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="famous" placeholder="name@example.com">
+        <label for="floatingInput">나만의 명대사 남기기</label>
+    </div>
     <div class="form-floating">
-        <textarea id="comment" class="form-control" placeholder="Leave a comment here"></textarea>
-        <label for="floatingTextarea2">코멘트</label>
+        <input type="password" class="form-control" id="password" placeholder="Password">
+        <label for="floatingPassword">PW</label>
     </div>
     <div class="mybtns">
         <button onclick="posting()" type="button" class="btn btn-dark">기록하기</button>
         <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
     </div>
 </div>
+
 <div class="mycards">
-    <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+    <div class="row row-cols-1 row-cols-md-4 g-4" id="movie-box">
     </div>
 </div>
+
+
+
+
 </body>
 
 </html>

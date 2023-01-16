@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <title>상세페이지</title>
+    <style>
+        * {
+            font-family: 'Black Han Sans', sans-serif;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .mytitle {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('http://image.cine21.com/resize/cine21/movie/2018/0914/20_08_32__5b9b96b0de7be[W578-].png');
+            background-position: center;
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mytitle > button {
+            width: 200px;
+            height: 50px;
+
+            background-color: transparent;
+            color: white;
+
+            font-size: 28px;
+
+            border-radius: 50px;
+            border: 1px solid white;
+
+            margin-top: 10px;
+        }
+
+        .mytitle > button:hover {
+            border: 2px solid white;
+        }
+
+        .mypost {
+            width: 95%;
+            max-width: 500px;
+            margin: 20px auto 10px auto;
+            padding: 20px;
+            box-shadow: 0px 0px 3px 0px gray;
+
+            display: none;
+        }
+
+        .info-box {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+
+            margin-top: 30px;
+        }
+
+        .comment-box {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            margin: 30px 0 50px 0;
+        }
+
+        .desc-box {
+            display: flex;
+            /*justify-content: center;*/
+            flex-direction: column;
+            width: 550px;
+            height: 550px;
+            margin: 10px;
+        }
+
+
+        .comment-part {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            margin-top: 20px;
+            height: 50px;
+        }
+
+        .img {
+            margin : 10px 30px 10px 40px;
+            background-color: teal;
+            width: auto;
+            height: 550px;
+
+        }
+
+        .img_fill {
+            width: auto;
+            height: 550px;
+            box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, .15);
+        }
+
+        .desc {
+            background-color: #DDDDDD;
+            margin-top: 20px;
+            padding : 30px;
+            height: 200px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, .15);
+        }
+
+        .comment-input {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .comment-btn {
+            margin-left: 30px;
+        }
+
+        .star {
+            background-color: orange;
+            height: auto;
+            margin: 30px 0 15px 0;
+            padding: 15px 10px 10px 15px;
+            box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, .15);
+            border-radius: 8px;
+            color: white;
+        }
+
+        .star_famous {
+            color: black;
+        }
+
+        .comment {
+            background-color: peachpuff;
+            padding: 10px 0 0 30px;
+            margin-right: 35px;
+            border-radius: 8px;
+            max-width: 900px;
+            width: 100%;
+            font-size: 23px;
+            box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, .15);
+        }
+
+        .modal {
+            position: fixed;
+            background-color: rgba(0, 0, 0, 0.4);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            width: 350px;
+            height: 160px;
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0, 00, 0, 0.15);
+            margin-left: 0;
+            animation: slidefade 0.3s linear;
+        }
+
+        @keyframes slidefade {
+            0% {
+                opacity: 0;
+                margin-top: 100px;
+            }
+            100% {
+                opacity: 1;
+                margin-top: 0;
+            }
+
+        }
+
+        .btn-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            bottom: 20px;
+            box-sizing: content-box;
+            width: 1px;
+            height: 1px;
+            color: #999;
+            font-size: 50px;
+            text-align: center;
+        }
+
+        c-delete {
+            display: flex;
+            width: 50px;
+            margin-top: 50px;
+            position: absolute;
+        }
+
+        .form-floating {
+            margin-bottom: 15px;
+        }
+
+        .star_show {
+            margin-top: 20px;
+            background-color: aliceblue;
+            padding: 15px 10px 10px 15px;
+            box-shadow: 0 0 15px rgba(0, 00, 0, 0.15);
+            border-radius: 8px;
+        }
+
+    </style>
+    <script>
+        function open_box() {
+            $('#post-box').show()
+        }
+        function close_box() {
+            $('#post-box').hide()
+        }
+    </script>
+</head>
+<body>
+<div class="mytitle">
+    <h1>밥은 먹고다니냐?</h1>
+    <button onclick="open_box()">수정하기</button>
+</div>
+
+<div class="mypost" id="post-box">
+    <div class="input-group mb-3">
+        <label class="input-group-text" for="star">별점</label>
+        <select class="form-select" id="star">
+            <option selected>-- 선택하기 --</option>
+            <option value="1">⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="5">⭐⭐⭐⭐⭐</option>
+        </select>
+    </div>
+    <div class="form-floating">
+        <textarea id="famous" class="form-control" placeholder="Leave a comment here"></textarea>
+        <label class="famous-in">명대사</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input id="password" type="password" class="form-control" placeholder="name@example.com">
+        <label>기록시 입력한 password를 입력해주세요</label>
+    </div>
+    <div class="mybtns">
+        <button onclick="changing()" type="button" class="btn btn-dark">수정하기</button>
+        <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
+        <button onclick="openModal(10000)" type="button" class="btn btn-outline-danger">삭제</button>
+    </div>
+</div>
+<!--모달창-->
+<div class="modal" id="modal-notice">
+    <div class="modal-content">
+        <a href="#none" class="btn-close" onclick="closeModal()"></a>
+        <li class="c-password">비밀번호를 입력하세요.</li>
+        <input type="password" id="c-password">
+        <button type="button" class="c-delete" onclick="del_com()">확인</button>
+    </div>
+</div>
+
+
+<div class="info-box" id="show-box">
+    <div class="img">
+        <img id="called-img" class="img_fill">
+    </div>
+
+    <div class="desc-box">
+        <div class="desc">
+            <h2> 줄거리 요약</h2>
+            <h5 id="desc">desc</h5>
+        </div>
+        <div class="star">
+            <h2>글쓴이가 생각하는 명대사</h2>
+            <h5 id="called_famous" class="star_famous">명대사</h5>
+        </div>
+        <div class="star_show">
+            <h2>나의 영화 평점</h2>
+            <h3 id="called_star">별점</h3>
+            </h1>
+        </div>
+    </div>
+</div>
+
+
+<div class="comment-box">
+    <div class="comment-input">
+        <input id="write_comment" class="form-control" type="text" placeholder="댓글을 입력하세요">
+    </div>
+    <div class="comment-btn">
+        <button onclick="add_comment()" class="btn btn-primary">등록</button>
+    </div>
+</div>
+
+</div>
+<div id="comments">
+</div>
+
+
+
+
+
+</body>
+
+
+<script>
+    const key_in_here = window.location.href.split('=')[1];
+
+
+    let comment_modal_number = 9999;
+    let password_from_check = "";
+
+
+    $(document).ready(function () {
+        listing();
+    });
+
+    function listing() {
+        $.ajax({
+            type: 'GET',
+            url: '/movie',
+            data: {},
+            success: function (response) {
+                let key = Number(key_in_here)
+                let rows = response['movie']
+                let comments = []
+
+                for (let i = 0; i < rows.length; i++) {
+
+                    if (rows[i]['key'] == key) {
+                        let image = rows[i]['image']
+                        let description = rows[i]['description']
+                        let famous = rows[i]['famous']
+                        let star = rows[i]['star']
+                        let star_image = '⭐'.repeat(star)
+                        password_from_check = rows[i]['password']
+                        comments = rows[i]['comment']
+
+                        console.log(famous);
+                        console.log(star_image);
+
+                        document.getElementById("called-img").src = image
+                        document.getElementById("desc").innerText = description
+                        document.getElementById("called_famous").innerText = famous
+                        document.getElementById("called_star").innerText = star_image
+
+                    }
+                }
+
+                console.log(comments)
+                console.log(comments[0])
+                console.log((typeof (comments[0])))
+
+                for (let j = 0; j < comments.length; j++) {
+                    let comment_insert = comments[j]
+
+
+                    let temp_html = `<div class="comment-part">
+                                            <div class="comment">
+                                                <p>${comment_insert}</p>
+                                            </div>
+                                                <button onclick="openModal(${j})">삭제</button>
+                                        </div>`
+                    console.log(j)
+
+                    $('#comments').append(temp_html)
+                }
+
+
+            }
+        })
+    }
+
+    function add_comment() {
+        let new_comment = $('#write_comment').val()
+        if (new_comment==""){
+            alert("댓글을 입력하세요")
+        }
+
+        else{$.ajax({
+            type: "POST",
+            url: "/comment/add",
+            data: {key_give: key_in_here, comment_give: new_comment},
+            success: function (response) {
+                alert(response["msg"])
+                window.location.reload()
+            }
+        });
+
+    }}
+
+    function del_comment(cnt) {
+        $.ajax({
+            type: "POST",
+            url: "/comment/del",
+            data: {key_give: key_in_here, num_give: cnt},
+            success: function (response) {
+                alert(response["msg"])
+                window.location.reload()
+            }
+        });
+    }
+
+    function changing() {
+        let changed_star = $('#star').val();
+        let changed_famous = $('#famous').val();
+        let changed_password = $('#password').val();
+        if ($('#star').val()=="-- 선택하기 --"){
+            alert("별 갯수를 입력하세요")
+        }
+        else if(changed_famous==""){
+            alert("명대사를 입력하세요")
+        }
+        else if(changed_password==""){
+            alert("비밀번호를 입력하세요")
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: "/change",
+                data: {
+                    key_give: key_in_here,
+                    star_give: changed_star,
+                    famous_give: changed_famous,
+                    password_give: changed_password
+                },
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            });
+        }}
+
+    let modal = document.getElementById('modal-notice');
+
+    function openModal(mod_num) {
+        comment_modal_number = mod_num;
+        modal.classList.add('active');
+
+    }
+
+    function del_com() {
+        let pass_check = $('#c-password').val()
+        if(comment_modal_number == 10000){      // 영화를 삭제하는 경우
+            if (pass_check == password_from_check) {
+                $.ajax({
+                    type: "POST",
+                    url: "/delete/movie",
+                    data: {key_give:key_in_here},
+                    success: function (response) {
+                        alert(response["msg"])
+                        window.location.href = '/';
+                    }
+                });
+            } else {
+                alert("비밀번호가 틀렸습니다.")
+                comment_modal_number = 9999
+                window.location.reload();
+            }
+        } else{     // 댓글을 삭제하는 경우
+            if (pass_check == password_from_check){
+            del_comment(comment_modal_number)
+            comment_modal_number = 9999
+        } else{
+            alert("비밀번호가 틀렸습니다.")
+            comment_modal_number = 9999
+            window.location.reload();
+        }
+        }
+    }
+
+
+
+
+
+
+    function closeModal() {
+        modal.classList.remove('active');
+    }
+
+    function open_box() {
+        $('#post-box').show()
+    }
+
+    function close_box() {
+        $('#post-box').hide()
+    }
+
+
+</script>
+</html>
