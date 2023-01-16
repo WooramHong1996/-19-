@@ -219,7 +219,7 @@
         <label>기록시 입력한 password를 입력해주세요</label>
     </div>
     <div class="mybtns">
-        <button onclick="posting()" type="button" class="btn btn-dark">수정하기</button>
+        <button onclick="changing()" type="button" class="btn btn-dark">수정하기</button>
         <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
     </div>
 </div>
@@ -259,18 +259,18 @@
     <div class="comment-box">
         <!--commet box-->
         <div class="comment-input">
-            <h1>comment-input</h1>
+            <h1></h1>
         </div>
-        <button>등록</button>
+        <button onclick="add_comment()">등록</button>
     </div>
-    <div class="comment-part">
-        <div class="comment">
-            <h1>댓글 내용</h1>
-        </div>
-        <button onclick="openModal()">삭제</button>
-    </div>
+<!--    <div class="comment-part">-->
+<!--        <div class="comment">-->
+<!--            <h1>댓글 내용</h1>-->
+<!--        </div>-->
+<!--        <button onclick="openModal()">삭제</button>-->
+<!--    </div>-->
 </div>
-<button onclick="add_comment()">등록</button>
+<!--<button onclick="add_comment()">등록</button>-->
 </div>
 <div id="comments">
 </div>
@@ -305,10 +305,13 @@
                         let password = rows[i]['password']
                         comments = rows[i]['comment']
 
+                        console.log(famous);
+                        console.log(star_image);
+
                         document.getElementById("called-img").src = image
                         document.getElementById("desc").innerText = description
-                        document.getElementById("famous").innerText = famous
-                        document.getElementById("star").innerText = star_image
+                        document.getElementById("called_famous").innerText = famous
+                        document.getElementById("called_star").innerText = star_image
 
                     }
                 }
@@ -323,7 +326,7 @@
 
                     let temp_html = `<div class="comment-part">
                                             <div class="comment">
-                                                <h1>"${comment_insert}"</h1>
+                                                <h1>${comment_insert}</h1>
                                             </div>
                                             <button onclick="del_comment(${j})">삭제</button>
                                         </div>`
@@ -358,6 +361,21 @@
             type: "POST",
             url: "/comment/del",
             data: {key_give: key_in_here, num_give: cnt},
+            success: function (response) {
+                alert(response["msg"])
+                window.location.reload()
+            }
+        });
+    }
+
+    function changing(){
+        let changed_star = $('#star').val();
+        let changed_famous = $('#famous').val();
+        let changed_password = $('#password').val();
+        $.ajax({
+            type: "POST",
+            url: "/change",
+            data: {key_give: key_in_here,star_give: changed_star, famous_give:changed_famous,password_give:changed_password},
             success: function (response) {
                 alert(response["msg"])
                 window.location.reload()
