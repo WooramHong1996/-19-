@@ -144,6 +144,9 @@
             if(url ==""){
                 alert("url을 입력하세요");
             }
+            else if(!(url[0,3] =="http")){
+                alert("유효한 url형식이 아닙니다.")
+            }
             else if(star=="-- 선택하기 --"){
                 alert("star 갯수를 선택하세요.")
             }
