@@ -116,15 +116,13 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title">${title}</h5>
                                                     <p class="card-text">${description}</p>
-                                                    <ul>
+                                                    <p>${star_image}</p>
                                                     <p class="mycomment">${famous}</p>
                                                     <button type="button" onclick="location.href='/movieDetail?movieKey=${key}'">자세히 보기</button>
                                                 </div>
                                             </div>
                                         </div>`
 
-                        http://127.0.0.1:5001/movieDetail?movieKey=0
-                        const key = window.location.href.split('=')[1];
 
 
                         $('#movie-box').append(temp_html)
