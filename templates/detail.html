@@ -13,8 +13,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
     <title>상세페이지</title>
     <style>
-          * {
+        * {
             font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        li{
+            list-style: none;
         }
 
         .mytitle {
@@ -32,6 +36,7 @@
             align-items: center;
             justify-content: center;
         }
+
         .mytitle > button {
             width: 200px;
             height: 50px;
@@ -44,123 +49,210 @@
 
             margin-top: 10px;
         }
+
         .mytitle > button:hover {
             border: 2px solid white;
         }
 
-        .info-box{
+        .info-box {
             display: flex;
             justify-content: center;
-            flex-direction : row;
+            flex-direction: row;
         }
-        .comment-box{
+
+        .comment-box {
             display: flex;
             justify-content: center;
-            flex-direction : row;
+            flex-direction: row;
         }
-        .desc-box{
+
+        .desc-box {
             display: flex;
             justify-content: center;
-            flex-direction : column;
+            flex-direction: column;
             background-color: antiquewhite;
             width: 600px;
             height: 500px;
             margin: 10px;
         }
-        .comment-part{
+
+        .comment-part {
             display: flex;
             justify-content: center;
-            flex-direction : row;
+            flex-direction: row;
             margin-top: 20px;
         }
-        .img{
+
+        .img {
             background-color: teal;
             width: 400px;
             height: 500px;
             margin: 10px;
         }
-        .desc{
+
+        .desc {
             background-color: yellow;
             height: 300px;
         }
-        .comment-input{
+
+        .comment-input {
             background-color: forestgreen;
             max-width: 1000px;
             width: 100%;
         }
-        .comment-btn{
+
+        .comment-btn {
             background-color: darkmagenta;
         }
-        .star{
+
+        .star {
             background-color: crimson;
             height: 100px;
             margin-top: 30px;
         }
-        .comment{
+
+        .comment {
             background-color: darkslateblue;
             color: antiquewhite;
             max-width: 1000px;
             width: 100%;
         }
 
+        .modal {
+            position: fixed;
+            background-color: rgba(0, 0, 0, 0.4);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        .modal.active{
+            display: block;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            width: 350px;
+            height: 160px;
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0,00,0,0.15);
+            margin-left: 0;
+            animation: slidefade 0.3s linear;
+        }
+        @keyframes slidefade {
+            0%{
+                opacity: 0;
+                margin-top: 100px;
+            }
+            100% {
+                opacity: 1;
+                margin-top: 0;
+            }
+
+        }
+
+        .btn-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            bottom: 20px;
+            box-sizing: content-box;
+            width: 1px;
+            height: 1px;
+            color: #;
+            font-size: 50px;
+            text-align: center;
+        }
+
+        c-delete{
+            display: flex;
+            width: 50px;
+            margin-top: 50px;
+            position: absolute;
+        }
+
     </style>
 </head>
 <body>
-    <div class="mytitle">
-        <h1>내 생애 최고의 영화들</h1>
-        <button onclick="open_box()">수정하기</button>
+<div class="mytitle">
+    <h1>내 생애 최고의 영화들</h1>
+    <button onclick="open_box()">수정하기</button>
+</div>
+<div class="info-box">
+    <!--img, desc box-->
+    <div class="img">
+        <h1>img</h1>
     </div>
-    <div class="info-box">
-        <!--img, desc box-->
-        <div class="img">
-            <h1>img</h1>
+    <div class="desc-box">
+        <div class="desc">
+            <h1>desc</h1>
         </div>
-        <div class="desc-box">
-            <div class="desc">
-                <h1>desc</h1>
-            </div>
-            <div class="star">
-                <h1>명대사, 별점</h1>
-            </div>
+        <div class="star">
+            <h1>명대사, 별점</h1>
         </div>
+    </div>
+</div>
+<div class="comment-box">
+    <!--commet box-->
+    <div class="comment-input">
+        <h1>comment-input</h1>
+    </div>
+    <button>등록</button>
+</div>
+<div class="comment-part">
+    <div class="comment">
+        <h1>댓글 내용</h1>
+    </div>
+    <button class="modal-notice" onclick="openModal()">삭제</button>
+</div>
+<div class="comment-part">
+    <div class="comment">
+        <h1>댓글 내용</h1>
+    </div>
+    <button onclick="openModal()">삭제</button>
+</div>
+<div class="comment-part">
+    <div class="comment">
+        <h1>댓글 내용</h1>
+    </div>
+    <button onclick="openModal()">삭제</button>
+</div>
+<div class="comment-part">
+    <div class="comment">
+        <h1>댓글 내용</h1>
+    </div>
+    <button onclick="openModal()">삭제</button>
+</div>
+<div class="comment-part">
+    <div class="comment">
+        <h1>댓글 내용</h1>
+    </div>
+    <button onclick="openModal()">삭제</button>
+</div>
+<!--모달창-->
+<div class="modal" id="modal-notice">
+    <div class="modal-content">
+        <a href="#none" class="btn-close" onclick="closeModal()"></a>
+        <li class="c-password">비밀번호를 입력하세요.</li>
+        <input type="password" id="c-password">
+        <button type="button" class="c-delete">확인</button>
+    </div>
+</div>
+<script>
+    let modal = document.getElementById('modal-notice');
 
-    </div>
-    <div class="comment-box">
-        <!--commet box-->
-        <div class="comment-input">
-            <h1>comment-input</h1>
-        </div>
-        <button>등록</button>
-    </div>
-    <div class="comment-part">
-        <div class="comment">
-            <h1>댓글 내용</h1>
-        </div>
-        <button>삭제</button>
-    </div>
-    <div class="comment-part">
-        <div class="comment">
-            <h1>댓글 내용</h1>
-        </div>
-        <button>삭제</button>
-    </div>
-    <div class="comment-part">
-        <div class="comment">
-            <h1>댓글 내용</h1>
-        </div>
-        <button>삭제</button>
-    </div>
-    <div class="comment-part">
-        <div class="comment">
-            <h1>댓글 내용</h1>
-        </div>
-        <button>삭제</button>
-    </div>
-    <div class="comment-part">
-        <div class="comment">
-            <h1>댓글 내용</h1>
-        </div>
-        <button>삭제</button>
-    </div>
+    function openModal() {
+        modal.classList.add('active');
+    }
+    function closeModal() {
+        modal.classList.remove('active');
+    }
+</script>
 </body>
 </html>
