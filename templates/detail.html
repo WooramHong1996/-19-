@@ -229,9 +229,10 @@
         <a href="#none" class="btn-close" onclick="closeModal()"></a>
         <li class="c-password">비밀번호를 입력하세요.</li>
         <input type="password" id="c-password">
-        <button type="button" class="c-delete" >확인</button>
+        <button type="button" class="c-delete" onclick="del_com()">확인</button>
     </div>
 </div>
+
 
 
 <div class="info-box" id="show-box">
@@ -280,6 +281,9 @@
 
 <script>
     const key_in_here = window.location.href.split('=')[1];
+    let comment_modal_number = 9999;
+    let password_from_check = "";
+
 
     $(document).ready(function () {
         listing();
@@ -302,7 +306,7 @@
                         let famous = rows[i]['famous']
                         let star = rows[i]['star']
                         let star_image = '⭐'.repeat(star)
-                        let password = rows[i]['password']
+                        password_from_check = rows[i]['password']
                         comments = rows[i]['comment']
 
                         console.log(famous);
@@ -328,7 +332,7 @@
                                             <div class="comment">
                                                 <h1>${comment_insert}</h1>
                                             </div>
-                                            <button onclick="del_comment(${j})">삭제</button>
+                                            <button onclick="openModal(${j})">삭제</button>
                                         </div>`
                     console.log(j)
 
@@ -385,10 +389,27 @@
 
     let modal = document.getElementById('modal-notice');
 
-    function openModal() {
-
+    function openModal(mod_num) {
+        comment_modal_number = mod_num;
         modal.classList.add('active');
+
     }
+
+    function del_com() {
+        let pass_check = $('#c-password').val()
+        if (pass_check == password_from_check){
+            del_comment(comment_modal_number)
+            comment_modal_number = 9999
+        }
+
+
+
+
+    }
+
+
+
+
 
     function closeModal() {
         modal.classList.remove('active');
